@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private EnemyController enemyPrefab;
-    [SerializeField] private int poolCount = 10;
-    [SerializeField] private float spawnInterval = 5;
+    public int poolCount = 10;
+    public float spawnInterval = 5;
     [SerializeField] private bool autoExpand = false;
     
     private Pool<EnemyController> pool;
@@ -43,5 +43,11 @@ public class EnemySpawner : MonoBehaviour
         {
             enemy.transform.position = spawnAreas[Random.Range(0, 3)];
         }
+    }
+
+    public void SetNewPoolCount(int newPoolCount)
+    {
+        poolCount = newPoolCount;
+        pool.ExpandPool(newPoolCount);
     }
 }

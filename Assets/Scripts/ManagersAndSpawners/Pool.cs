@@ -74,4 +74,13 @@ public class Pool<T> where T : MonoBehaviour
         return null;
         //throw new System.Exception($"There is no free elements in pool of type {typeof(T)}");
     }
+    
+    public void ExpandPool(int newPoolSize)
+    {
+        int diff = newPoolSize - this.pool.Count;
+        for (int i = 0; i < diff; i++)
+        {
+            this.CreateObject();
+        }
+    }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerConroller : MonoBehaviour
 {
-    [SerializeField] private  int health;
+    [SerializeField] private  int maxHealth;
+    private  int health;
     [SerializeField] private float speed;
     
     [SerializeField] private Transform shotPoint;
@@ -28,6 +29,8 @@ public class PlayerConroller : MonoBehaviour
         hb = GetComponentInChildren<Healthbar>();
         hb.SetMaxHealth(health);
         hb.SetHealth(health);
+
+        health = maxHealth;
     }
 
     void FixedUpdate()
@@ -59,6 +62,7 @@ public class PlayerConroller : MonoBehaviour
     void OnPlayerDeath(){
         if(health<=0){
             sm.RemoveMember();
+            health = maxHealth;
         }    
     }
     void RotateSprite()

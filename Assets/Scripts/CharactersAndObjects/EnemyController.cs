@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]private LayerMask playerLayer;
 
     private SquadManager sm;
+    private GameManager gm;
     private GameObject target;
     private NavMeshAgent agent;
     private Healthbar hb;
@@ -26,6 +27,7 @@ public class EnemyController : MonoBehaviour
     {
         health = maxHealth;
         sm = FindObjectOfType<SquadManager>();
+        gm = FindObjectOfType<GameManager>();
         hb = GetComponentInChildren<Healthbar>();
         hb.SetMaxHealth(health);
         hb.SetHealth(health);
@@ -45,6 +47,10 @@ public class EnemyController : MonoBehaviour
     private void OnEnable()
     {
         health = maxHealth;
+        if (hb != null)
+        {
+            hb.SetHealth(health);
+        }
     }
     
     void EnemyMovement()
@@ -92,7 +98,9 @@ public class EnemyController : MonoBehaviour
     }
     
     void OnEnemyDeath(){
-        if(health<=0){
+        if(health<=0)
+        {
+            gm.score++;
             this.gameObject.SetActive(false);
         }    
     }
