@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SquadManager : MonoBehaviour
 {
@@ -9,8 +8,10 @@ public class SquadManager : MonoBehaviour
     
     [SerializeField] private List<GameObject> prefabs = new List<GameObject>();
     public List<GameObject> squad { get; } = new List<GameObject>();
+    private GameManager gm;
     void Start()
     {
+        gm = FindObjectOfType<GameManager>();
         AddLeader();
     }
 
@@ -31,7 +32,7 @@ public class SquadManager : MonoBehaviour
     {
         if (squad.Count == 1)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gm.GameOver();
         }
         Destroy(squad[squad.Count - 1]);
         squad.RemoveAt(squad.Count - 1);

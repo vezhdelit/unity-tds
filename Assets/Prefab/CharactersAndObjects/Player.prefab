@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9037544791aa29a498d83f46ff90fcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  maxHealth: 10
   speed: 7
   shotPoint: {fileID: 3183701006120889199}
   startTimeBtwShots: 0.3

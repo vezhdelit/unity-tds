@@ -23,14 +23,14 @@ public class PlayerConroller : MonoBehaviour
 
     void Start()
     {
+        health = maxHealth;
+
         bp = FindObjectOfType<BulletPool>();
         rb = GetComponent<Rigidbody2D>();
         sm = FindObjectOfType<SquadManager>();
         hb = GetComponentInChildren<Healthbar>();
         hb.SetMaxHealth(health);
         hb.SetHealth(health);
-
-        health = maxHealth;
     }
 
     void FixedUpdate()
