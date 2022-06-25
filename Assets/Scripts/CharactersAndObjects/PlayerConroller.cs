@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +12,7 @@ public class PlayerConroller : MonoBehaviour
     [SerializeField] private float startTimeBtwShots;
     private float timeBtwShots;
 
-
+    private AudioSource shootSound;
     private Vector2 moveInput;
     private Vector2 moveVelocity;
     private Rigidbody2D rb;
@@ -25,7 +24,8 @@ public class PlayerConroller : MonoBehaviour
     void Start()
     {
         health = maxHealth;
-
+        
+        shootSound = GetComponentInChildren<AudioSource>();
         bp = FindObjectOfType<BulletPool>();
         rb = GetComponent<Rigidbody2D>();
         sm = FindObjectOfType<SquadManager>();
@@ -53,6 +53,8 @@ public class PlayerConroller : MonoBehaviour
     {
         if(timeBtwShots <= 0){
             if(Input.GetMouseButton(0)){
+                shootSound.pitch = Random.Range(0.9f, 1.1f);
+                shootSound.Play();
                 bp.CreateBullet(shotPoint, transform);
                 timeBtwShots = startTimeBtwShots;
             }

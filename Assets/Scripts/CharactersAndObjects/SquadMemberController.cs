@@ -12,6 +12,7 @@ public class SquadMemberController : MonoBehaviour
     private float timeBtwShots;
     public int id;
 
+    private AudioSource shootSound;
     private SquadManager sm;
     private GameObject target;
     private BulletPool bp;
@@ -19,6 +20,7 @@ public class SquadMemberController : MonoBehaviour
 
     void Start()
     {
+        shootSound = GetComponentInChildren<AudioSource>();
         bp = FindObjectOfType<BulletPool>();
         sm = FindObjectOfType<SquadManager>();
         hb = GetComponentInChildren<Healthbar>();
@@ -48,7 +50,10 @@ public class SquadMemberController : MonoBehaviour
     void Shooting()
     {
                 if(timeBtwShots <= 0){
-                    if(Input.GetMouseButton(0)){
+                    if(Input.GetMouseButton(0))
+                    {
+                        shootSound.pitch = Random.Range(0.9f, 1.1f);
+                        shootSound.Play();
                         bp.CreateBullet(shotPoint, transform);
                         timeBtwShots = startTimeBtwShots;
                     }
