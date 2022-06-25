@@ -12,11 +12,12 @@ public class PlayerConroller : MonoBehaviour
     [SerializeField] private Transform shotPoint;
     [SerializeField] private float startTimeBtwShots;
     private float timeBtwShots;
-    
-    private Rigidbody2D rb;
-    private BulletPool bp;
+
+
     private Vector2 moveInput;
     private Vector2 moveVelocity;
+    private Rigidbody2D rb;
+    private BulletPool bp;
     private Healthbar hb;
     private SquadManager sm;
 
@@ -44,6 +45,7 @@ public class PlayerConroller : MonoBehaviour
     void Movement()
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        
         moveVelocity = moveInput.normalized * speed;
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
     }

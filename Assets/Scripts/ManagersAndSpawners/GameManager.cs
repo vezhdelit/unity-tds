@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreDisplay;
     [SerializeField] private TextMeshProUGUI timerDisplay;
     [SerializeField] private TextMeshProUGUI gameOverDisplay;
-    [SerializeField] private GameObject panel;
+    
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject pausePanel;
+    
     private EnemySpawner enemySpawner;
 
     private void Awake()
@@ -40,18 +43,40 @@ public class GameManager : MonoBehaviour
 
         enemySpawner.SetNewPoolCount(enemySpawner.poolCount + 10);
         enemySpawner.spawnInterval -= 0.01f;
-        StartCoroutine(upLevel());
+        if (enemySpawner.poolCount <= 100)
+        {
+            StartCoroutine(upLevel());
+        }
     }
     public void GameOver()
     {
         Time.timeScale = 0;
-        panel.SetActive(true);
+        gameOverPanel.SetActive(true);
         
         gameOverDisplay.text = $"Zombies killed: {score.ToString()}\nSurvival time: {(Math.Round(time)) + "s"}";
     }
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Pause()
+    {
+        if (pausePanel.activeSelf)
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1; 
+        }
+        else
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0; 
+        }
+
     }
     
 }
