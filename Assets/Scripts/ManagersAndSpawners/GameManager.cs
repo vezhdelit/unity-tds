@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     
     private EnemySpawner enemySpawner;
+    private SquadManager sm;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        sm = FindObjectOfType<SquadManager>();
         StartCoroutine(upLevel());
     }
 
@@ -34,7 +36,6 @@ public class GameManager : MonoBehaviour
         scoreDisplay.text = score.ToString();
         timerDisplay.text = (Math.Round(time)) + "s";
         time += Time.deltaTime;
-        
     }
     
     private IEnumerator upLevel()
@@ -42,14 +43,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(upLevelInterval);
 
         enemySpawner.SetNewPoolCount(enemySpawner.poolCount + 10);
-        enemySpawner.spawnInterval -= 0.01f;
-        if (enemySpawner.poolCount <= 100)
+        enemySpawner.spawnInterval -= 0.02f;
+
+        if (enemySpawner.poolCount <= 120 && enemySpawner.spawnInterval>= 0.05f)
         {
             StartCoroutine(upLevel());
         }
     }
     public void GameOver()
     {
+        sm.gameObject.SetActive(false);
+        enemySpawner.gameObject.SetActive(false);
         Time.timeScale = 0;
         gameOverPanel.SetActive(true);
         
@@ -68,11 +72,15 @@ public class GameManager : MonoBehaviour
     {
         if (pausePanel.activeSelf)
         {
+            sm.gameObject.SetActive(true);
+            enemySpawner.gameObject.SetActive(true);
             pausePanel.SetActive(false);
             Time.timeScale = 1; 
         }
         else
         {
+            sm.gameObject.SetActive(false);
+            enemySpawner.gameObject.SetActive(false);
             pausePanel.SetActive(true);
             Time.timeScale = 0; 
         }

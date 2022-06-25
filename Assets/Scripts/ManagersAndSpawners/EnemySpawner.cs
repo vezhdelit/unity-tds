@@ -44,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
             enemy.transform.position = spawnAreas[Random.Range(0, 3)];
         }
     }
-
+    
     public void SetNewPoolCount(int newPoolCount)
     {
         poolCount = newPoolCount;
